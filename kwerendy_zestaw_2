@@ -1,0 +1,31 @@
+update postac
+    set wiek = 89
+    WHERE id_postaci = 7;
+update postac
+    set wiek = 34
+    WHERE id_postaci = 4;
+update postac
+    set wiek = 29
+    WHERE id_postaci = 8;
+update postac
+    set wiek = 56
+    WHERE id_postaci = 5;
+update postac
+    set wiek = 67
+    WHERE id_postaci = 6;
+
+
+delete from postac WHERE wiek = '89';
+delete from postac WHERE wiek = '67';
+
+ALTER TABLE postac DROP FOREIGN KEY postac_ibfk_1;
+ALTER TABLE postac DROP KEY statek_id;
+ALTER TABLE waliza DROP FOREIGN KEY walizka_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+ALTER TABLE postac MODIFY COLUMN id_postaci INT;
+
+ALTER TABLE postac DROP PRIMARY KEY;
+
+
+
