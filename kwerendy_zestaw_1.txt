@@ -73,6 +73,72 @@ INSERT INTO izba (nazwa_izby, adres_budynku) VALUES ('spizarnia', 'Bajkowa 3');
 INSERT INTO przetwory (zawartosc, dodatek) VALUES ('bigos', 'papryczka chilli');
 
 
+insert into postac (rodzaj) values ('wiking');
+insert into postac (rodzaj) values ('wiking');
+insert into postac (rodzaj) values ('wiking');
+insert into postac (rodzaj) values ('wiking');
+insert into postac (rodzaj) values ('wiking');
 
 
+CREATE TABLE statek (
+    nazwa_statku varchar(40),
+    rodzaj_statku ENUM('Bojowy', 'Towarowy', 'Maly', 'Duzy'),
+    data_wodowania DATE,
+    max_ladownosc int UNSIGNED,
+    PRIMARY KEY (nazwa_statku)
+    );
 
+insert into statek (nazwa_statku, rodzaj_statku)  values ('Bizon', 'Bojowy');
+insert into statek (nazwa_statku, rodzaj_statku)  values ('Amor', 'Bojowy');
+
+
+ALTER TABLE postac ADD funkcja varchar(40);
+
+UPDATE postac
+    SET funkcja = 'Kapitan'
+    WHERE id_postaci = 1;
+
+ALTER TABLE postac ADD COLUMN statek_id varchar(40);
+
+ALTER TABLE postac
+ADD FOREIGN KEY (statek_id) REFERENCES statek (nazwa_statku);
+
+update postac
+    set nazwa = 'Marek'
+    WHERE id_postaci = 4;
+update postac
+    set nazwa = 'Darek'
+    WHERE id_postaci = 5;
+update postac
+    set nazwa = 'Kazik'
+    WHERE id_postaci = 6;
+update postac
+    set nazwa = 'Wiktor'
+    WHERE id_postaci = 7;
+update postac
+    set nazwa = 'Konrad'
+    WHERE id_postaci = 8;
+
+
+update postac
+    set statek_id = 'Bizon'
+    WHERE nazwa = 'Bjorn';
+update postac
+    set statek_id = 'Bizon'
+    WHERE nazwa = 'Marek';
+update postac
+    set statek_id = 'Bizon'
+    WHERE nazwa = 'Darek';
+
+update postac
+    set statek_id = 'Amor'
+    WHERE nazwa = 'Wiktor';
+update postac
+    set statek_id = 'Amor'
+    WHERE nazwa = 'Kazik';
+update postac
+    set statek_id = 'Amor'
+    WHERE nazwa = 'Konrad';
+
+DELETE FROM izba WHERE nazwa_izby = 'spizarnia';
+drop table izba;
