@@ -27,5 +27,76 @@ ALTER TABLE postac MODIFY COLUMN id_postaci INT;
 
 ALTER TABLE postac DROP PRIMARY KEY;
 
+ALTER TABLE postac ADD pesel varchar(11);
+
+update postac set pesel = 14583241344 where id_postaci = 1;
+update postac set pesel = 28476352481 where id_postaci = 2;
+update postac set pesel = 19728495368 where id_postaci = 3;
+update postac set pesel = 19064738423 where id_postaci = 4;
+update postac set pesel = 10485766325 where id_postaci = 5;
+update postac set pesel = 19746374852 where id_postaci = 8;
+
+ALTER TABLE postac ADD PRIMARY KEY (pesel);
+
+ALTER TABLE postac MODIFY COLUMN rodzaj ENUM('wiking','ptak','kobieta','syrena');
+INSERT INTO postac (id_postaci, nazwa, rodzaj, data_ur, wiek, pesel) VALUES (9,'Gertruda Nieszczera','syrena','1674-11-02', 350, 12345435633);
+
+UPDATE postac
+SET statek_id = 'Bizon'
+WHERE nazwa LIKE '%a%';
+
+update statek set data_wodowania = '1933-08-15' where nazwa_statku = 'Amor';
+update statek set data_wodowania = '1621-04-28' where nazwa_statku = 'Bizon';
+update statek set max_ladownosc = 1200 where nazwa_statku = 'Amor';
+update statek set max_ladownosc = 1400 where nazwa_statku = 'Bizon';
+
+UPDATE statek 
+SET max_ladownosc = max_ladownosc * 0.7 
+WHERE data_wodowania BETWEEN '1901-01-01' AND '2000-12-31';
+
+SELECT * FROM postac WHERE wiek <= 1000;
+INSERT INTO postac (id_postaci, nazwa, pesel) VALUES (10, 'Loko', 53467384952);
+
+CREATE TABLE marynarz (
+    -> id_marynarza int NOT NULL,
+    -> nazwa varchar(40),
+    -> rodzaj ENUM('wiking','ptak','kobieta','syrena'),
+    -> data_ur date,
+    -> wiek int UNSIGNED,
+    -> funkcja varchar(40),
+    -> statek_id varchar(40),
+    -> pesel varchar(11),
+    -> PRIMARY KEY (pesel));
+
+
+INSERT INTO marynarz (id_marynarza, nazwa, wiek, data_ur, rodzaj, funkcja, pesel, statek_id) 
+SELECT id_postaci, nazwa, wiek, data_ur, rodzaj, funkcja, pesel, statek_id 
+FROM postac  
+WHERE statek_id IS NOT NULL;
+
+UPDATE postac
+SET statek_id = NULL;
+
+UPDATE marynarz 
+SET statek_id = NULL;
+
+DELETE FROM postac
+WHERE nazwa = 'Marek';
+
+
+DELETE FROM statek  WHERE nazwa_statku = 'Amor';
+DELETE FROM statek  WHERE nazwa_statku = 'Bizon';
+drop table statek;
+
+CREATE TABLE zwierz (
+    -> id int AUTO_INCREMENT,
+    -> nazwa varchar(100),
+    -> wiek int,
+    -> PRIMARY KEY (id));
+
+INSERT INTO zwierz VALUES (1, 'Drozd', 24);
+INSERT INTO zwierz VALUES (2, 'Loko', 21);
+
+UPDATE postac set wiek = 21 where id_postaci = 10;
 
 
