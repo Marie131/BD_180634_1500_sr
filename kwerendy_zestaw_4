@@ -4,9 +4,21 @@ SELECT AVG(waga) AS srednia_waga FROM kreatura WHERE rodzaj = 'wiking';
 SELECT COUNT(rodzaj) AS liczba_kreatur, AVG(waga) AS srednia_waga FROM kreatura GROUP BY rodzaj;
 
 SELECT AVG(2024 - YEAR(dataUr)) AS sredni_wiek FROM kreatura;
+
 ZAD 2
 SELECT SUM(waga*ilosc) AS waga_sum FROM zasob GROUP BY rodzaj;
 
 SELECT nazwa, SUM(waga*ilosc)/SUM(ilosc) FROM zasob GROUP BY nazwa HAVING SUM(waga*ilosc) >= 10 AND SUM(ilosc)>4;
 
 SELECT COUNT(nazwa),rodzaj from zasob GROUP BY rodzaj HAVING count(ilosc) > 1;
+ZAD 3
+SELECT kreatura.nazwa, COUNT(ekwipunek.idKreatury), SUM(ekwipunek.ilosc) AS ilosc FROM kreatura LEFT JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury GROUP BY kreatura.nazwa;
+
+SELECT kreatura.nazwa, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu;
+
+SELECT kreatura.nazwa, SUM(ekwipunek.ilosc) AS ilosc FROM kreatura LEFT JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury  WHERE ekwipunek.ilosc IS NULL GROUP BY kreatura.nazwa;
+ZAD 4
+SELECT kreatura.nazwa, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu WHERE kreatura.rodzaj='wiking' AND YEAR(dataUr) BETWEEN 1670 AND 1679;
+
+SELECT kreatura.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu WHERE zasob.rodzaj='jedzenie' ORDER BY YEAR(dataUr) DESC LIMIT 5;
+
