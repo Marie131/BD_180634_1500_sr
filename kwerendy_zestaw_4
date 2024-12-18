@@ -22,3 +22,24 @@ SELECT kreatura.nazwa, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatur
 
 SELECT kreatura.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu WHERE zasob.rodzaj='jedzenie' ORDER BY YEAR(dataUr) DESC LIMIT 5;
 
+SELECT A.nazwa as nazwa1, B.nazwa AS nazwa2 FROM kreatura AS A JOIN kreatura AS B ON B.idKreatury - A.idKreatury = 5
+ZAD 5
+SELECT kreatura.rodzaj, AVG(zasob.waga*ekwipunek.ilosc) FROM kreatura 
+INNER JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury 
+INNER JOIN zasob ON ekwipunek.idZasobu = zasob.idZasobu
+GROUP BY kreatura.rodzaj;
+
+
+
+
+SELECT rodzaj, 
+(SELECT nazwa FROM kreatura WHERE rodzaj = kreatura.rodzaj ORDER BY YEAR(dataUr) DESC LIMIT 1) AS najm_n,
+(SELECT dataUr FROM kreatura WHERE rodzaj = kreatura.rodzaj ORDER BY YEAR(dataUr) DESC LIMIT 1) AS najm_d,
+(SELECT nazwa FROM kreatura WHERE rodzaj = kreatura.rodzaj ORDER BY YEAR(dataUr) ASC LIMIT 1) AS najs_n,
+(SELECT dataUr FROM kreatura WHERE rodzaj = kreatura.rodzaj ORDER BY YEAR(dataUr) ASC LIMIT 1) AS najs_d
+FROM kreatura GROUP BY rodzaj;
+
+
+
+
+
