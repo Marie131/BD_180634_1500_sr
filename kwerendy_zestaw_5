@@ -1,0 +1,24 @@
+ZAD 1
+1.  CREATE TABLE radzkam.kreatura SELECT * FROM wikingowie.kreatura;
+    CREATE TABLE radzkam.uczestnicy SELECT * FROM wikingowie.uczestnicy;
+    CREATE TABLE radzkam.etapy_wyprawy SELECT * FROM wikingowie.etapy_wyprawy;
+    CREATE TABLE radzkam.sektor SELECT * FROM wikingowie.sektor;
+    CREATE TABLE radzkam.wyprawa SELECT * FROM wikingowie.wyprawa;
+2.  SELECT kreatura.nazwa, uczestnicy.id_wyprawy FROM kreatura LEFT JOIN uczestnicy ON kreatura.idKreatury=uczestnicy.id_uczestnika WHERE uczestnicy.id_wyprawy IS NULL;
+3.  SELECT wyprawa.nazwa, SUM(zasob.waga*ekwipunek.ilosc) AS waga FROM wyprawa 
+JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy 
+JOIN kreatura ON uczestnicy.id_uczestnika=kreatura.idKreatury
+JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury
+JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu 
+WHERE kreatura.idKreatury=uczestnicy.id_uczestnika AND uczestnicy.id_wyprawy IS NOT NULL
+GROUP BY wyprawa.nazwa;
+
+ZAD 2
+1.  SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika) AS ilosc, GROUP_CONCAT(kreatura.nazwa SEPARATOR ', ') AS nazwa FROM wyprawa
+    JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy
+    JOIN kreatura ON uczestnicy.id_uczestnika=kreatura.idKreatury
+    GROUP BY wyprawa.nazwa;
+2.  SELECT wyprawa.nazwa, etapy_wyprawy.idEtapu, etapy_wyprawy.dziennik, sektor.nazwa FROM wyprawa 
+    JOIN etapy_wyprawy ON wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy
+    JOIN etapy_wyprawy ON etapy_wyprawy.sektor=id_sektora
+    GROUP BY wyprawa.nazwa;
